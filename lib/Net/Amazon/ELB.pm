@@ -72,6 +72,7 @@ has 'debug'				=> ( is => 'ro', isa => 'Str', required => 0, default => 0 );
 has 'signature_version'	=> ( is => 'ro', isa => 'Int', required => 1, default => 2 );
 has 'signature_method'	=> ( is => 'ro', isa => 'Str', required => 1, default => 'HmacSHA1' );
 has 'version'			=> ( is => 'ro', isa => 'Str', required => 1, default => '2009-05-15' );
+has 'region'			=> ( is => 'ro', isa => 'Str', required => 1, default => '' );
 has 'timestamp'			=> ( 
 	is			=> 'ro', 
 	isa			=> 'Str', 
@@ -90,6 +91,7 @@ has 'base_url'			=> (
 	required	=> 1,
 	lazy		=> 1,
 	default		=> sub {
+        return 'elasticloadbalancing.' . $_[0]->region . '.amazonaws.com' if length $_[0]->region;
 		return 'elasticloadbalancing.amazonaws.com';
 	}
 );
